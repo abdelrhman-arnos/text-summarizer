@@ -1,3 +1,5 @@
+import nlp from "compromise";
+
 function tokenizeWords(text){
     return text
         .toLowerCase()
@@ -30,8 +32,36 @@ function simplifySentence(sentence, wordFrequencyMap){
 function summary(text, numSentences){
     const sentences = text.split(/[.!?]+/).map(sentence => sentence.trim());
     const words = tokenizeWords(text);
-    const wordFrequencyMap = buildWordFrequencyMap(words);
-    const sentenceScores = sentences.map(sentence => simplifySentence(sentence, wordFrequencyMap));
+    const keywordMap = buildKeywordMap(words);
+    const sentenceScores = sentences.map(sentence => simplifySentence(sentence, keywordMap));
+    const summarizedSentences = sentenceScores
+        .sort((a, b) => b.sentenceScore - a.sentenceScore)
+        .slice(0, numSentences)
+        .map(result => result.sentence)
+        .join('. ');
+
+    return summarizedSentences;
+}
+
+function buildKeywordMap(words){
+    const wordList = words.join(' ');
+    const nlpDoc = nlp(wordList);
+    const keywords = nlpDoc.keywords().out('topk');
+
+    const keywordMap = {};
+
+    keywords.forEach(item => {
+        keywordMap[item.normal] = item.count;
+    });
+
+    return keywordMap;
+}
+
+function summary(text, numSentences){
+    const sentences = text.split(/[.!?]+/).map(sentence => sentence.trim());
+    const words = tokenizeWords(text);
+    const keywordMap = buildKeywordMap(words);
+    const sentenceScores = sentences.map(sentence => simplifySentence(sentence, keywordMap));
     const summarizedSentences = sentenceScores
         .sort((a, b) => b.sentenceScore - a.sentenceScore)
         .slice(0, numSentences)

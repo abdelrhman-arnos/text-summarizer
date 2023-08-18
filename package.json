@@ -4,9 +4,17 @@
   "description": "This repository contains a minimalistic JavaScript-based web application that automatically generates a summary of a given text. The application uses a simplified version of the TextRank algorithm for sentence extraction based on word frequency and co-occurrence.",
   "main": "index.js",
   "scripts": {
+    "start": "parcel index.html",
+    "build": "parcel build index.html",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "compromise": "^14.10.0"
+  },
+  "devDependencies": {
+    "parcel-bundler": "^1.12.5"
+  }
 }
