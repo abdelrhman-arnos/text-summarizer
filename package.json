@@ -1,0 +1,12 @@
+{
+  "name": "text-summarizer",
+  "version": "1.0.0",
+  "description": "This repository contains a minimalistic JavaScript-based web application that automatically generates a summary of a given text. The application uses a simplified version of the TextRank algorithm for sentence extraction based on word frequency and co-occurrence.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
